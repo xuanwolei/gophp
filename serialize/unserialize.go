@@ -3,7 +3,7 @@ package serialize
 import (
 	"bytes"
 	"fmt"
-	"github.com/techoner/gophp/utils"
+	"github.com/xuanwolei/gophp/utils"
 	"strconv"
 )
 

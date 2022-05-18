@@ -10,7 +10,7 @@ Golang implementation for PHP's functions
 ## Install / Update
 
 ```
-go get -u github.com/techoner/gophp
+go get -u github.com/xuanwolei/gophp
 ```
 
 ## Example
@@ -21,7 +21,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/techoner/gophp"
+	"github.com/xuanwolei/gophp"
 )
 
 func main() {
