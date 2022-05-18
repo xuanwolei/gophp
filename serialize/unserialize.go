@@ -3,9 +3,8 @@ package serialize
 import (
 	"bytes"
 	"fmt"
-	"strconv"
-
 	"github.com/techoner/gophp/utils"
+	"strconv"
 )
 
 const UNSERIALIZABLE_OBJECT_MAX_LEN = int64(10 * 1024 * 1024 * 1024)
@@ -150,7 +149,6 @@ func unMarshalArray(reader *bytes.Reader) (interface{}, error) {
 	var arrLen int
 	var err error
 	val := make(map[string]interface{})
-
 	arrLen, err = readLength(reader)
 
 	if err != nil {
@@ -172,20 +170,19 @@ func unMarshalArray(reader *bytes.Reader) (interface{}, error) {
 		}
 
 		// if errKey == nil && errVal == nil {
-		// val[k] = v
 		switch t := k.(type) {
 		default:
 			return nil, fmt.Errorf("UnMarshal: Unexpected key type %T", t)
 		case string:
 			stringKey, _ := k.(string)
 			val[stringKey] = v
+			//val = append(val, v)
 		case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64:
 			// intKey, _ := k.(int)
 			// val[strconv.Itoa(intKey)] = v
 			stringKey, _ := utils.NumericalToString(k)
 			val[stringKey] = v
 
-			// stringI, _ := utils.NumericalToString(i)
 			if i == k {
 				indexLen++
 			}
@@ -203,12 +200,16 @@ func unMarshalArray(reader *bytes.Reader) (interface{}, error) {
 
 	if indexLen == arrLen {
 		var slice []interface{}
-		for _, row := range val {
-			slice = append(slice, row)
+		//解决map range乱序问题
+		for i := 0; i < len(val); i++ {
+			k, _ := utils.NumericalToString(i)
+			slice = append(slice, val[k])
 		}
+		//for _, row := range val {
+		//	slice = append(slice, row)
+		//}
 		return slice, nil
 	}
-
 	return val, nil
 }
 

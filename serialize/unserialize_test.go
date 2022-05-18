@@ -1,6 +1,7 @@
 package serialize
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -11,7 +12,7 @@ func TestUnMarshal(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-
+	fmt.Println(out, out)
 	_, ok := out.([]interface{})
 	if !ok {
 		t.Errorf("UnMarshal incorrectly, have got %t\n", out)
